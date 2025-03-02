@@ -7,7 +7,7 @@ Our experiments demonstrate significant improvements over the baseline Latent-Ne
 # Our Results 🎨
 ## Generated 3D Models
 
-![Ice Cream 3D Model](ice_cream.gif)
+![Ballerina 3D Model](Ballerina.gif)
 
 ## Additional Examples
 
