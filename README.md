@@ -16,7 +16,8 @@ Our experiments demonstrate significant improvements over the baseline Latent-Ne
 
 # Acknowledgments
 
-Our work builds upon the Latent-NeRF project by Metzer et al., as well as the 3D Gaussian Splatting by Kerbl et al.
+Our work builds upon the Latent-NeRF project by Metzer et al.
+```bibtex
 @article{metzer2022latent,
   title={Latent-NeRF for Shape-Guided Generation of 3D Shapes and Textures},
   author={Metzer, Gal and Richardson, Elad and Patashnik, Or and Giryes, Raja and Cohen-Or, Daniel},
