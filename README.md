@@ -4,9 +4,6 @@ Text-guided image generation has progressed rapidly in recent years, inspiring m
 NSFD eliminates unwanted noise components from the gradient calculation, leading to more stable training and higher quality results.
 Our experiments demonstrate significant improvements over the baseline Latent-NeRF approach, including enhanced detail preservation, better multi-view consistency, and superior rendering quality as measured by PSNR and SSIM metrics.
 
-TL;DR - We implement NSFD instead of SDS, resulting in more detailed geometry, improved rendering quality, and better multi-view consistency.
-
-
 # Our Results 🎨
 ## Generated 3D Models
 
