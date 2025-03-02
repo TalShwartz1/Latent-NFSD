@@ -16,11 +16,21 @@ Our experiments demonstrate significant improvements over the baseline Latent-Ne
 
 # Acknowledgments
 
-Our work builds upon the Latent-NeRF project by Metzer et al.
+Our work builds upon the following research:
+
+- [Latent-NeRF for Shape-Guided Generation of 3D Shapes and Textures](https://arxiv.org/abs/2211.07600) (Metzer et al., 2022)
+- [Noise-Free Score Distillation](https://arxiv.org/abs/2310.17590) (Katzir et al., 2023)
+
 ```bibtex
 @article{metzer2022latent,
   title={Latent-NeRF for Shape-Guided Generation of 3D Shapes and Textures},
   author={Metzer, Gal and Richardson, Elad and Patashnik, Or and Giryes, Raja and Cohen-Or, Daniel},
   journal={arXiv preprint arXiv:2211.07600},
   year={2022}
+}
+@article{katzir2023noisefree,
+  title={Noise-Free Score Distillation},
+  author={Katzir, Oren and Patashnik, Or and Cohen-Or, Daniel and Lischinski, Dani},
+  journal={arXiv preprint arXiv:2310.17590},
+  year={2023}
 }
