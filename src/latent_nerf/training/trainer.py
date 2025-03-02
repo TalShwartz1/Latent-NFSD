@@ -86,7 +86,7 @@ class Trainer:
 
     def init_optimizer(self) -> Tuple[Optimizer, Any]:
         optimizer = torch.optim.Adam(self.nerf.get_params(self.cfg.optim.lr), betas=(0.9, 0.99), eps=1e-15)
-        scaler = torch.cuda.amp.GradScaler(enabled=self.cfg.optim.fp16)
+        scaler = torch.amp.GradScaler('cuda',enabled=self.cfg.optim.fp16)
         return optimizer, scaler
 
     def init_dataloaders(self) -> Dict[str, DataLoader]:
@@ -130,7 +130,7 @@ class Trainer:
             # Keep going over dataloader until finished the required number of iterations
             for data in self.dataloaders['train']:
                 if self.nerf.cuda_ray and self.train_step % self.cfg.render.update_extra_interval == 0:
-                    with torch.cuda.amp.autocast(enabled=self.cfg.optim.fp16):
+                    with torch.amp.autocast('cuda',enabled=self.cfg.optim.fp16):
                         self.nerf.update_extra_state()
 
                 self.train_step += 1
@@ -138,7 +138,7 @@ class Trainer:
 
                 self.optimizer.zero_grad()
 
-                with torch.cuda.amp.autocast(enabled=self.cfg.optim.fp16):
+                with torch.amp.autocast('cuda',enabled=self.cfg.optim.fp16):
                     pred_rgbs, pred_ws, loss = self.train_render(data)
 
                 self.scaler.scale(loss).backward()
@@ -169,7 +169,7 @@ class Trainer:
             all_preds_depth = []
 
         for i, data in enumerate(dataloader):
-            with torch.cuda.amp.autocast(enabled=self.cfg.optim.fp16):
+            with torch.amp.autocast('cuda',enabled=self.cfg.optim.fp16):
                 preds, preds_depth, preds_normals = self.eval_render(data)
 
             pred, pred_depth, pred_normals = tensor2numpy(preds[0]), tensor2numpy(preds_depth[0]), tensor2numpy(
@@ -231,6 +231,24 @@ class Trainer:
         # Guidance loss
         loss_guidance = self.diffusion.train_step(text_z, pred_rgb)
         loss = loss_guidance
+
+        # # Modified guidance loss calculation for NSFD
+        # if self.cfg.guide.append_direction:
+        #     dirs = data['dir']  # [B,]
+        #     text_z = self.text_z[dirs]
+        # else:
+        #     text_z = self.text_z
+        #
+        # # Pass NSFD parameters from config to train_step
+        # loss_guidance = self.diffusion.train_step(
+        #     text_z,
+        #     pred_rgb,
+        #     noise_scale=self.cfg.guide.noise_scale,
+        #     sds_weight=self.cfg.guide.sds_weight,
+        #     nsfd_weight=self.cfg.guide.nsfd_weight
+        # )
+        #
+        # loss = loss_guidance
 
         # Sparsity loss
         if 'sparsity_loss' in self.losses:

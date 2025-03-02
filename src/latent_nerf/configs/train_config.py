@@ -11,7 +11,7 @@ from .render_config import RenderConfig
 class GuideConfig:
     """ Parameters defining the guidance """
     # Guiding text prompt
-    text: str
+    text: str = 'Bonsai'
     # Append direction to text prompts
     append_direction: bool = True
     # A Textual-Inversion concept to use
@@ -24,6 +24,9 @@ class GuideConfig:
     mesh_scale: float = 0.7
     # Define the proximal distance allowed
     proximal_surface: float = 0.3
+    noise_scale: float = 0.1  # Scale of noise for NSFD
+    sds_weight: float = 1.0  # Weight for original SDS loss
+    nsfd_weight: float = 1.0  # Weight for NSFD modification
 
 
 @dataclass
@@ -53,9 +56,11 @@ class OptimConfig:
 class LogConfig:
     """ Parameters for logging and saving """
     # Experiment name
-    exp_name: str
+    exp_name: str = "experiment"
     # Experiment output dir
     exp_root: Path = Path('experiments/')
+    # # Experiment output dir
+    # exp_root: Path = Path('nfsd/')
     # How many steps between save step
     save_interval: int = 100
     # Run only test
@@ -83,6 +88,8 @@ class TrainConfig:
     guide: GuideConfig = field(default_factory=GuideConfig)
 
     def __post_init__(self):
+        if self.guide.nsfd_weight > 0:
+            logger.info("Using NSFD modification")
         if self.log.eval_only and (self.optim.ckpt is None and not self.optim.resume):
             logger.warning(
                 'NOTICE! log.eval_only=True, but no checkpoint was chosen -> Manually setting optim.resume to True')

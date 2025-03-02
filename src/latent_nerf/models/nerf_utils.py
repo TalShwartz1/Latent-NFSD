@@ -46,13 +46,15 @@ class MLP(nn.Module):
 
 class _trunc_exp(Function):
     @staticmethod
-    @custom_fwd(cast_inputs=torch.float)
+    # @custom_fwd(cast_inputs=torch.float)
+    @torch.amp.custom_fwd(cast_inputs=torch.float,device_type='cuda')
     def forward(ctx, x):
         ctx.save_for_backward(x)
         return torch.exp(x)
 
     @staticmethod
-    @custom_bwd
+    # @custom_bwd
+    @torch.amp.custom_fwd(cast_inputs=torch.float,device_type='cuda')
     def backward(ctx, g):
         x = ctx.saved_tensors[0]
         return g * torch.exp(x.clamp(-15, 15))

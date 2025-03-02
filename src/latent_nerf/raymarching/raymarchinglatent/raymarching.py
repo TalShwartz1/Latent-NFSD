@@ -18,7 +18,8 @@ except ImportError:
 
 class _near_far_from_aabb(Function):
     @staticmethod
-    @custom_fwd(cast_inputs=torch.float32)
+    #@custom_fwd(cast_inputs=torch.float32)
+    @torch.amp.custom_fwd(cast_inputs=torch.float32, device_type='cuda')
     def forward(ctx, rays_o, rays_d, aabb, min_near=0.2):
         ''' near_far_from_aabb, CUDA implementation
         Calculate rays' intersection time (near and far) with aabb
@@ -51,7 +52,8 @@ near_far_from_aabb = _near_far_from_aabb.apply
 
 class _sph_from_ray(Function):
     @staticmethod
-    @custom_fwd(cast_inputs=torch.float32)
+    #@custom_fwd(cast_inputs=torch.float32)
+    @torch.amp.custom_fwd(cast_inputs=torch.float32, device_type='cuda')
     def forward(ctx, rays_o, rays_d, radius):
         ''' sph_from_ray, CUDA implementation
         get spherical coordinate on the background sphere from rays.
@@ -128,7 +130,8 @@ morton3D_invert = _morton3D_invert.apply
 
 class _packbits(Function):
     @staticmethod
-    @custom_fwd(cast_inputs=torch.float32)
+    #@custom_fwd(cast_inputs=torch.float32)
+    @torch.amp.custom_fwd(cast_inputs=torch.float32, device_type='cuda')
     def forward(ctx, grid, thresh, bitfield=None):
         ''' packbits, CUDA implementation
         Pack up the density grid into a bit field to accelerate ray marching.
@@ -160,7 +163,8 @@ packbits = _packbits.apply
 
 class _march_rays_train(Function):
     @staticmethod
-    @custom_fwd(cast_inputs=torch.float32)
+    #@custom_fwd(cast_inputs=torch.float32)
+    @torch.amp.custom_fwd(cast_inputs=torch.float32, device_type='cuda')
     def forward(ctx, rays_o, rays_d, bound, density_bitfield, C, H, nears, fars, step_counter=None, mean_count=-1, perturb=False, align=-1, force_all_rays=False, dt_gamma=0, max_steps=1024):
         ''' march rays to generate points (forward only)
         Args:
@@ -237,7 +241,8 @@ march_rays_train = _march_rays_train.apply
 
 class _composite_rays_train(Function):
     @staticmethod
-    @custom_fwd(cast_inputs=torch.float32)
+    #@custom_fwd(cast_inputs=torch.float32)
+    @torch.amp.custom_fwd(cast_inputs=torch.float32, device_type='cuda')
     def forward(ctx, sigmas, rgbs, deltas, rays, T_thresh=1e-4):
         ''' composite rays' rgbs, according to the ray marching formula.
         Args:
@@ -269,7 +274,8 @@ class _composite_rays_train(Function):
         return weights_sum, depth, image
     
     @staticmethod
-    @custom_bwd
+    # @custom_bwd
+    @torch.amp.custom_bwd(device_type='cuda')
     def backward(ctx, grad_weights_sum, grad_depth, grad_image):
 
         # NOTE: grad_depth is not used now! It won't be propagated to sigmas.
@@ -296,7 +302,8 @@ composite_rays_train = _composite_rays_train.apply
 
 class _march_rays(Function):
     @staticmethod
-    @custom_fwd(cast_inputs=torch.float32)
+    #@custom_fwd(cast_inputs=torch.float32)
+    @torch.amp.custom_fwd(cast_inputs=torch.float32, device_type='cuda')
     def forward(ctx, n_alive, n_step, rays_alive, rays_t, rays_o, rays_d, bound, density_bitfield, C, H, near, far, align=-1, perturb=False, dt_gamma=0, max_steps=1024):
         ''' march rays to generate points (forward only, for inference)
         Args:
@@ -350,7 +357,8 @@ march_rays = _march_rays.apply
 
 class _composite_rays(Function):
     @staticmethod
-    @custom_fwd(cast_inputs=torch.float32) # need to cast sigmas & rgbs to float
+    #@custom_fwd(cast_inputs=torch.float32) # need to cast sigmas & rgbs to float
+    @torch.amp.custom_fwd(cast_inputs=torch.float32, device_type='cuda')
     def forward(ctx, n_alive, n_step, rays_alive, rays_t, sigmas, rgbs, deltas, weights_sum, depth, image, T_thresh=1e-2):
         ''' composite rays' rgbs, according to the ray marching formula. (for inference)
         Args:

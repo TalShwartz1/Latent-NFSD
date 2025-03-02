@@ -2,7 +2,9 @@ import pyrallis
 
 from src.latent_nerf.configs.train_config import TrainConfig
 from src.latent_nerf.training.trainer import Trainer
-
+import os
+os.environ['TORCH_CUDA_ARCH_LIST'] = "7.5"  # Replace with your GPU's compute capability
+os.environ['TORCH_CPP_LOG_LEVEL'] = 'DEBUG'
 
 
 @pyrallis.wrap()
