@@ -232,31 +232,31 @@ class Trainer:
         loss_guidance = self.diffusion.train_step(text_z, pred_rgb)
         loss = loss_guidance
 
-        # # Modified guidance loss calculation for NSFD
-        # if self.cfg.guide.append_direction:
-        #     dirs = data['dir']  # [B,]
-        #     text_z = self.text_z[dirs]
-        # else:
-        #     text_z = self.text_z
-        #
-        # # Pass NSFD parameters from config to train_step
-        # loss_guidance = self.diffusion.train_step(
-        #     text_z,
-        #     pred_rgb,
-        #     noise_scale=self.cfg.guide.noise_scale,
-        #     sds_weight=self.cfg.guide.sds_weight,
-        #     nsfd_weight=self.cfg.guide.nsfd_weight
-        # )
-        #
-        # loss = loss_guidance
+        # Modified guidance loss calculation for NSFD
+        if self.cfg.guide.append_direction:
+            dirs = data['dir']  # [B,]
+            text_z = self.text_z[dirs]
+        else:
+            text_z = self.text_z
 
-        # Sparsity loss
-        if 'sparsity_loss' in self.losses:
-            loss += self.cfg.optim.lambda_sparsity * self.losses['sparsity_loss'](pred_ws)
+        # Pass NSFD parameters from config to train_step
+        loss_guidance = self.diffusion.train_step(
+            text_z,
+            pred_rgb,
+            noise_scale=self.cfg.guide.noise_scale,
+            sds_weight=self.cfg.guide.sds_weight,
+            nsfd_weight=self.cfg.guide.nsfd_weight
+        )
 
-        # Shape loss
-        if 'shape_loss' in self.losses:
-            loss += self.cfg.optim.lambda_shape * self.losses['shape_loss'](outputs['xyzs'], outputs['sigmas'])
+        loss = loss_guidance
+
+        # # Sparsity loss
+        # if 'sparsity_loss' in self.losses:
+        #     loss += self.cfg.optim.lambda_sparsity * self.losses['sparsity_loss'](pred_ws)
+        #
+        # # Shape loss
+        # if 'shape_loss' in self.losses:
+        #     loss += self.cfg.optim.lambda_shape * self.losses['shape_loss'](outputs['xyzs'], outputs['sigmas'])
 
         return pred_rgb, pred_ws, loss
 

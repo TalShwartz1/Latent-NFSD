@@ -58,9 +58,9 @@ class LogConfig:
     # Experiment name
     exp_name: str = "experiment"
     # Experiment output dir
-    exp_root: Path = Path('experiments/')
+    #exp_root: Path = Path('experiments/')
     # # Experiment output dir
-    # exp_root: Path = Path('nfsd/')
+    exp_root: Path = Path('nfsd/')
     # How many steps between save step
     save_interval: int = 100
     # Run only test
