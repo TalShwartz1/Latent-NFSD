@@ -12,7 +12,7 @@ Our experiments demonstrate significant improvements over the baseline Latent-Ne
 ## Additional Examples
 
 ![Ice Cream 3D Model](ice_cream.gif)
-![Frog 3D Model](frog.gif)
+![Lego man 3D Model](lego_man.gif)
 
 # Acknowledgments
 
