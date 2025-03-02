@@ -28,9 +28,13 @@ Our work builds upon the following research:
   journal={arXiv preprint arXiv:2211.07600},
   year={2022}
 }
+```
+
+```bibtex
 @article{katzir2023noisefree,
   title={Noise-Free Score Distillation},
   author={Katzir, Oren and Patashnik, Or and Cohen-Or, Daniel and Lischinski, Dani},
   journal={arXiv preprint arXiv:2310.17590},
   year={2023}
 }
+```
