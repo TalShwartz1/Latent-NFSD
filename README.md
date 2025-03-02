@@ -29,7 +29,6 @@ Our work builds upon the following research:
   year={2022}
 }
 
-```bibtex
 @article{katzir2023noisefree,
   title={Noise-Free Score Distillation},
   author={Katzir, Oren and Patashnik, Or and Cohen-Or, Daniel and Lischinski, Dani},
