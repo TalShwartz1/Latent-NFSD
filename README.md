@@ -11,8 +11,8 @@ Our Results :art:
 
 
 ![Video Description](Ballerina.gif)
-![Video Description](an ice cream.gif)
-![Video Description](an frog.gif)
+![Video Description](ice_cream.gif)
+![Video Description](frog.gif)
 
 Acknowledgments
 Our work builds upon the Latent-NeRF project by Metzer et al., as well as the 3D Gaussian Splatting by Kerbl et al.
