@@ -4,19 +4,17 @@ Text-guided image generation has progressed rapidly in recent years, inspiring m
 NSFD eliminates unwanted noise components from the gradient calculation, leading to more stable training and higher quality results.
 Our experiments demonstrate significant improvements over the baseline Latent-NeRF approach, including enhanced detail preservation, better multi-view consistency, and superior rendering quality as measured by PSNR and SSIM metrics.
 
-Description :scroll:
-Official Implementation for "Latent-Gaussian Splatting with NSFD for Enhanced Text-to-3D Generation".
+TL;DR - We implement NSFD instead of SDS, resulting in more detailed geometry, improved rendering quality, and better multi-view consistency.
 
-TL;DR - We replace the NeRF architecture in the Latent-NeRF framework with 3D Gaussian Splatting and implement NSFD instead of SDS, resulting in more detailed geometry, improved rendering quality, and better multi-view consistency.
-
-Recent Updates :newspaper:
-
-03.03.2025 - Code release
-20.02.2025 - Created initial repo
 
 Our Results :art:
-Our Latent-Gaussian Splatting approach demonstrated significant improvements over the baseline Latent-NeRF model:
-<img src="https://github.com/user/latent-gaussian/raw/docs/docs/comparison.gif" width="800px"/>
-Below we can see the progress of the generation process over optimization with increasing iterations:
-<img src="https://github.com/user/latent-gaussian/raw/docs/docs/iterations_progress.gif" width="800px"/>
-To create such results, run the train_latent_gaussian script. Parameters are handled using pyrallis and can be passed from a config file or the cmd.
+![Video Description](C:\Users\tal15\Downloads\Ballerina.gif)
+
+Acknowledgments
+Our work builds upon the Latent-NeRF project by Metzer et al., as well as the 3D Gaussian Splatting by Kerbl et al.
+@article{metzer2022latent,
+  title={Latent-NeRF for Shape-Guided Generation of 3D Shapes and Textures},
+  author={Metzer, Gal and Richardson, Elad and Patashnik, Or and Giryes, Raja and Cohen-Or, Daniel},
+  journal={arXiv preprint arXiv:2211.07600},
+  year={2022}
+}
