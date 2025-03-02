@@ -1,4 +1,4 @@
-#Latent-Gaussian Splatting with NSFD for Enhanced Text-to-3D Generation
+**#Latent-Gaussian Splatting with NSFD for Enhanced Text-to-3D Generation**
 
 Text-guided image generation has progressed rapidly in recent years, inspiring major breakthroughs in text-guided shape generation. Building upon recent advances in 3D generation, we propose implementing Noise-Free Score Distillation (NSFD) instead of traditional Score Distillation Sampling (SDS). Our approach maintains the benefits of latent space diffusion while providing significant improvements in generation quality, geometric fidelity, and visual detail.
 NSFD eliminates unwanted noise components from the gradient calculation, leading to more stable training and higher quality results.
@@ -18,7 +18,7 @@ TL;DR - We implement NSFD instead of SDS, resulting in more detailed geometry, i
 
 ![Frog 3D Model](frog.gif)
 
-#Acknowledgments
+**# Acknowledgments**
 
 Our work builds upon the Latent-NeRF project by Metzer et al., as well as the 3D Gaussian Splatting by Kerbl et al.
 @article{metzer2022latent,
