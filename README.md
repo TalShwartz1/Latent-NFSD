@@ -8,7 +8,7 @@ TL;DR - We implement NSFD instead of SDS, resulting in more detailed geometry, i
 
 
 Our Results :art:
-![Video Description](C:\Users\tal15\Downloads\Ballerina.gif)
+![Video Description](Ballerina.gif)
 
 Acknowledgments
 Our work builds upon the Latent-NeRF project by Metzer et al., as well as the 3D Gaussian Splatting by Kerbl et al.
